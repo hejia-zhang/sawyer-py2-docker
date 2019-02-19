@@ -73,26 +73,23 @@
     ```
 
 ## Trouble Shooting
-- Notice moveit sawyer collision definition.
-    ```xml
-    <!-- remove controller_box in sawyer_moveit/sawyer_moveit_config/srdf/sawyer.srdf.xacro -->
-    <xacro:sawyer_base tip_name="$(arg tip_name)"/>
-    <!--Controller Box Collisions-->
--  <xacro:if value="$(arg controller_box)">
-+  <!--xacro:if value="$(arg controller_box)">
-     <xacro:include filename="$(find sawyer_moveit_config)/srdf/controller_box.srdf.xacro" />
-     <xacro:controller_box/>
--  </xacro:if>
-+  </xacro:if-->
-   <!--Right End Effector Collisions-->
-   <xacro:if value="$(arg electric_gripper)">
-    ```
-    ```xml
-    <disable_collisions link1="head" link2="right_arm_base_link" reason="Never" />
-    <disable_collisions link1="head" link2="right_l0" reason="Adjacent" />
-    <disable_collisions link1="head" link2="right_l1" reason="Default" />
-+   <disable_collisions link1="head" link2="right_l2" reason="Default" />
-    <disable_collisions link1="head" link2="screen" reason="Adjacent" />
-    <disable_collisions link1="head" link2="torso" reason="Never" />
-    <disable_collisions link1="pedestal" link2="right_arm_base_link" reason="Adjacent" />
-    ```
+- We need to modify moveit sawyer config files to get rid of some wrong self-collision detection.
+    - Remove controller_box in sawyer_moveit/sawyer_moveit_config/srdf/sawyer.srdf.xacro
+        - You will get 
+            ```xml
+            <!--xacro:if value="$(arg controller_box)">
+            <xacro:include filename="$(find sawyer_moveit_config)/srdf/controller_box.srdf.xacro" />
+            <xacro:controller_box/>
+            </xacro:if-->
+            ```
+    - Disable some self-collision checks in sawyer_base.srdf.xacro.
+        - You will get
+            ```xml
+            <disable_collisions link1="head" link2="right_arm_base_link" reason="Never" />
+            <disable_collisions link1="head" link2="right_l0" reason="Adjacent" />
+            <disable_collisions link1="head" link2="right_l1" reason="Default" />
+            <disable_collisions link1="head" link2="right_l2" reason="Default" />
+            <disable_collisions link1="head" link2="screen" reason="Adjacent" />
+            <disable_collisions link1="head" link2="torso" reason="Never" />
+            <disable_collisions link1="pedestal" link2="right_arm_base_link" reason="Adjacent" />
+            ```

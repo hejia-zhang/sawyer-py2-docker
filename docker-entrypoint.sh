@@ -4,7 +4,7 @@ ORANGE='\033[0;33m'
 WHITE='\033[1;37m'
 
 export USER=sawyer_docker
-export SAWYER_PYTHON=/opt/conda/envs/sawyer/bin/python
+export SAWYER_PYTHON=/usr/bin/python
 
 # Clean up bashrc
 echo "export USER=sawyer_docker" > "/home/$USER/.bashrc"
@@ -214,8 +214,8 @@ rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
 
 # Build ROS_WS
 # convert python2 code to python3
-chmod +x /root/code/sawyer/scripts/sawyer_2to3.sh
-/root/code/sawyer/scripts/sawyer_2to3.sh "/home/$USER/ros_ws/src/"
+# chmod +x /root/code/sawyer/scripts/sawyer_2to3.sh
+# /root/code/sawyer/scripts/sawyer_2to3.sh "/home/$USER/ros_ws/src/"
 source /opt/ros/kinetic/setup.bash
 cd "/home/$USER/ros_ws"
 
@@ -223,8 +223,8 @@ export CMAKE_PREFIX_PATH=/usr/local:$CMAKE_PREFIX_PATH
 
 # See https://github.com/osmcode/pyosmium/issues/52
 # We need boost_python-py35
-rm /usr/lib/x86_64-linux-gnu/libboost_python.so
-ln -s /usr/lib/x86_64-linux-gnu/libboost_python-py35.so /usr/lib/x86_64-linux-gnu/libboost_python.so
+# rm /usr/lib/x86_64-linux-gnu/libboost_python.so
+# ln -s /usr/lib/x86_64-linux-gnu/libboost_python-py35.so /usr/lib/x86_64-linux-gnu/libboost_python.so
 
 catkin_make -DPYTHON_EXECUTABLE:FILEPATH=$SAWYER_PYTHON -DCATKIN_BLACKLIST_PACKAGES='moveit_setup_assistant'
 
@@ -233,9 +233,9 @@ cp $SAWYER_CODE_ROOT/envs/sawyer/sawyer_learning.launch $ROS_WS/src/sawyer_simul
 cp $SAWYER_CODE_ROOT/envs/sawyer/sawyer_world_learning.launch $ROS_WS/src/sawyer_simulator/sawyer_gazebo/launch
 cp $SAWYER_CODE_ROOT/envs/sawyer/sawyer_learning.world $ROS_WS/src/sawyer_simulator/sawyer_gazebo/worlds/
 
-if [ -f /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so ] ; then
-  rm /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so
-fi
+# if [ -f /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so ] ; then
+#   rm /opt/ros/kinetic/lib/python2.7/dist-packages/cv2.so
+# fi
 
 echo "
 function run_gazebo() {

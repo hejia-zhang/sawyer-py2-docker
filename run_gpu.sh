@@ -39,7 +39,7 @@ if [ "$ROBOT" = "sawyer" ] ; then
 	  --device /dev/fuse \
 	  --name "sawyer-ros-docker" \
 	  --security-opt apparmor:unconfined \
-    sawyer-ros-docker:gpu bash;
+    sawyer-ros-py2-docker:gpu bash;
 else
   echo "The robot "$ROBOT" is not supported by us!";
 fi
